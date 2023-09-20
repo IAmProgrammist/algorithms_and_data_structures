@@ -2,13 +2,29 @@
 #define ALG_AND_DATA_STRUCTURES_ALGC_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
-void PrintByte(unsigned char *a);
+    void PrintByte(unsigned char *a);
 
-void PrintVar(void *a, unsigned int size);
+    void PrintVar(void *a, unsigned int size);
+
+    typedef enum
+    {
+        red,
+        yellow,
+        green
+    } colors;
+
+    char strByteToSignedChar(char *in);
+
+    float strByteToFloat(char *in);
+
+    colors strByteToEnumColors(char *in);
+
+    char *strByteToByteArray(char *in);
 #ifdef __cplusplus
 }
 #endif
 
-#endif //ALG_AND_DATA_STRUCTURES_ALGC_H
+#endif // ALG_AND_DATA_STRUCTURES_ALGC_H
