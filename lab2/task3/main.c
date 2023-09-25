@@ -23,26 +23,15 @@ int main()
         } while (StrError != OK);
 
         int left = StrCSpn(input, filter);
-        switch (StrError)
-        {
-        case OK:
+        if (StrError == OK)
             printf("Characters left after filter: %d", left);
-            fflush(stdout);
-            break;
-        case BUFFER_OVERFLOW:
+        else if (StrError == BUFFER_OVERFLOW)
             printf("An error accured during execution: buffer was overflown.\n");
-            fflush(stdout);
-            break;
-        case INVALID_FORMAT:
+        else if (StrError == INVALID_FORMAT)
             printf("An error accured during execution: invalid format.\n");
-            fflush(stdout);
-            break;
-        case OUT_OF_BOUNDS:
+        else if (StrError == OUT_OF_BOUNDS)
             printf("An error accured during execution: out of bounds.\n");
-            fflush(stdout);
-            break;
-        }
-    } while(StrError != OK);
+    } while (StrError != OK);
 
     return 0;
 }

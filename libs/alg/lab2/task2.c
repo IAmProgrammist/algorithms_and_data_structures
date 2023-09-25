@@ -3,6 +3,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+const int OK = 0;
+const int BUFFER_OVERFLOW = 1;
+const int INVALID_FORMAT = 2;
+const int OUT_OF_BOUNDS = 3;
+
+int StrError = OK;
+
 unsigned Length(string1 s)
 {
     for (unsigned i = 0; i < sizeof(string1); i++)

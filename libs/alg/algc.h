@@ -25,12 +25,12 @@ extern "C"
 
     char *strByteToByteArray(char *in);
 
-    #define OK 0
-    #define BUFFER_OVERFLOW 1
-    #define INVALID_FORMAT 2
-    #define OUT_OF_BOUNDS 3
+    extern const int OK;
+    extern const int BUFFER_OVERFLOW;
+    extern const int INVALID_FORMAT;
+    extern const int OUT_OF_BOUNDS;
 
-    int StrError; // Переменная ошибок
+    extern int StrError; // Переменная ошибок
 
     typedef char string1[256];
 
