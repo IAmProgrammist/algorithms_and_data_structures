@@ -42,10 +42,11 @@ extern "C"
     int Comp(string1 s1, string1 s2);
     void Delete(string1 s, unsigned Index, unsigned Count);
     void Insert(string1 Subs, string1 s, unsigned Index);
-    void Concat(string1 s1, string1 s2, string1 srez);
     unsigned Length(string1 s);
+    void Concat(string1 s1, string1 s2, string1 srez);
     void Copy(string1 s, unsigned Index, unsigned Count, string1 Subs);
     unsigned Pos(string1 SubS, string1 s);
+    unsigned StrCSpn(string1 s, string1 s1);
 #ifdef __cplusplus
 }
 #endif
