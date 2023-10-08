@@ -17,4 +17,7 @@ target_link_libraries(lab2_task2 alg)
 add_executable(lab2_task3 ./lab2/task3/main.c)
 target_link_libraries(lab2_task3 alg)
 
+add_executable(t ./lab3/main.c)
+target_link_libraries(t alg)
+
 # Zero library

@@ -1,4 +1,4 @@
-#include "../algc.h"
+#include "string.h"
 
 unsigned StrCSpn(string1 s, string1 s1) {
     int sLen = Length(s);

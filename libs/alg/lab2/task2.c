@@ -1,4 +1,4 @@
-#include "../algc.h"
+#include "string.h"
 
 #include <stdio.h>
 #include <stdbool.h>
