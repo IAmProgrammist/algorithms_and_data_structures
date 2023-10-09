@@ -5,6 +5,8 @@
 
 typedef void (*SortingFunction)(int*, int, int*);
 
+#define INC_COMPARES(comps) ((!comps || ++(*comps)))
+
 void swap(int* a, int* b);
 bool isOrdered(int* a, int size);
 bool isOrderedBackwards(int* a, int size);
@@ -19,6 +21,6 @@ void bubbleSortMod1(int* data, int size, int* comps);
 void bubbleSortMod2(int* data, int size, int* comps);
 void shellSort(int* data, int size, int* comps);
 void hoarSort(int* data, int size, int* comps);
-void pyramidSort(int* data, int size, int* comps);
+void heapSort(int* data, int size, int* comps);
 
 #endif

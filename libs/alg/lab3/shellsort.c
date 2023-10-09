@@ -14,7 +14,7 @@ void shellSort(int* data, int size, int* comps) {
         for (int i = h; i < size; i++) {
             int j = i;
             
-            while (j - h >= 0 && ++(*comps) && data[j - h] > data[j]) {
+            while (j - h >= 0 && INC_COMPARES(comps) && data[j - h] > data[j]) {
                 swap(data + j - h, data + j);
                 j -= h;
             }

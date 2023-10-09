@@ -8,12 +8,12 @@ void hoarSort(int *data, int size, int *comps) {
     int i = 0, j = size - 1;
     int midElement = data[size / 2];
     while (1) {
-        if (++(*comps) && data[i] < midElement) {
+        if (INC_COMPARES(comps) && data[i] < midElement) {
             i++;
             continue;
         }
 
-        if (++(*comps) && data[j] > midElement) {
+        if (INC_COMPARES(comps) && data[j] > midElement) {
             j--;
             continue;
         }

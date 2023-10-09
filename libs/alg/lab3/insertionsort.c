@@ -5,7 +5,7 @@
 void insertionSort(int* data, int size, int* comps) {
     for (int i = 1; i < size; i++) {
         int j = i - 1;
-        while (j >= 0 && ++(*comps) && data[j] > data[i])
+        while (j >= 0 && INC_COMPARES(comps) && data[j] > data[i])
             j--;
 
         int element = data[i];
