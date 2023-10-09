@@ -23,4 +23,6 @@ void shellSort(int* data, int size, int* comps);
 void hoarSort(int* data, int size, int* comps);
 void heapSort(int* data, int size, int* comps);
 
+void comparesExperiment(SortingFunction function, char *sortingFunctionName, int low, int high, int step);
+
 #endif
