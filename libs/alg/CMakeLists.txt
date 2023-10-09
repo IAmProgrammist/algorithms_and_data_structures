@@ -7,7 +7,8 @@ SET (lab3funcs ./lab3/utility.c
 ./lab3/bubblesortmod1.c
 ./lab3/bubblesortmod2.c
 ./lab3/shellsort.c
-./lab3/hoarsort.c)
+./lab3/hoarsort.c
+./lab3/pyramidsort.c)
 
 add_library(alg ${lab1funcs} ${lab2funcs} ${lab3funcs})
 
