@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "../../libs/alg/algc.h"
+#include <algc.h>
 
 int main() {
     assert(strByteToSignedChar("11110100") == -12);

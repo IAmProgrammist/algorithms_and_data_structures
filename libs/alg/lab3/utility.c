@@ -1,4 +1,4 @@
-#include "sorts.h"
+#include <lab3/sorts.h>
 
 #include <assert.h>
 #include <limits.h>

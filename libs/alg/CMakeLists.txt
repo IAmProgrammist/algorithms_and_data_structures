@@ -11,5 +11,6 @@ SET (lab3funcs ./lab3/utility.c
 ./lab3/heapsort.c)
 
 add_library(alg ${lab1funcs} ${lab2funcs} ${lab3funcs})
+target_include_directories(alg PUBLIC ../../include/alg)
 
 target_link_libraries(alg m)

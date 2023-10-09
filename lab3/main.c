@@ -1,8 +1,5 @@
-#include "../libs/alg/algc.h"
-
-#include <assert.h>
+#include <algc.h>
 #include <time.h>
-#include <stdio.h>
 
 #define LOW 5
 #define HIGH 45

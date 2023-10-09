@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../algc.h"
+#include <algc.h>
 
 void PrintByte(unsigned char *a) {
     for (int bitIndex = 7; bitIndex >= 0; bitIndex--) {

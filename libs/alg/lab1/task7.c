@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "../algc.h"
+#include <algc.h>
 
 char strByteToSignedChar(char *in) {
     char *dat = strByteToByteArray(in);

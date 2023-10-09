@@ -1,4 +1,4 @@
-#include "sorts.h"
+#include <lab3/sorts.h>
 
 void heapSort(int* data, int size, int* comps) {
     

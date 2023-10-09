@@ -1,4 +1,4 @@
-#include "sorts.h"
+#include <lab3/sorts.h>
 
 void selectionSort(int* data, int size, int* comps) {
     for (int i = 0; INC_COMPARES(comps) && i < size - 1; i++) {
