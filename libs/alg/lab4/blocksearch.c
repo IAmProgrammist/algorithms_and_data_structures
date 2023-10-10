@@ -1,18 +1,30 @@
 #include <lab4/search.h>
 
-int orderedBinarySearch(int* a, int size, int searchElement, int* comps) {
-    int left = 0, right = size - 1;
+#include <math.h>
 
-    while (INC_COMPARES(comps) && left <= right) {
-        int middle = left + (right - left) / 2;
+int orderedBlockSearch(int* a, int size, int searchElement, int* comps) {
+    int blockSize = sqrtl(size);
+    int blocksAmount = size / blockSize + size % blockSize;
+    for (int i = 0; INC_COMPARES(comps) && i < blocksAmount; i++) {
+        int blockBeginIndex = i * blockSize;
+        int blockEndIndex = (i + 1) * blockSize;
+        blockEndIndex = INC_COMPARES(comps) && blockEndIndex > size ? size : blockEndIndex;
 
-        if (INC_COMPARES(comps) && a[middle] < searchElement) 
-            left = middle + 1;
-        else if (INC_COMPARES(comps) && a[middle] > searchElement)
-            right = middle - 1;
-        else
-            return middle;
+        if (INC_COMPARES(comps) && a[blockEndIndex - 1] < searchElement) continue;
+
+        int j = blockBeginIndex;
+        while (INC_COMPARES(comps) && j < blockEndIndex) {
+            if (INC_COMPARES(comps) && a[j] > searchElement)
+                return size;
+
+            if (INC_COMPARES(comps) && a[j] == searchElement)
+                return j;
+            
+            j++;
+        }
+
+        return size;
     }
-    
+
     return size;
 }
