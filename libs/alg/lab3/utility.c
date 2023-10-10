@@ -61,6 +61,7 @@ void comparesExperiment(SortingFunction function, char *sortingFunctionName, int
         function(array, i, &compares);
         assert(isOrdered(array, i));
         printf("For %3d elements: %7d compares\n", i, compares);
+        free(array);
     }
 
     printf("\nOrdered backwards array results:\n");
@@ -71,6 +72,7 @@ void comparesExperiment(SortingFunction function, char *sortingFunctionName, int
         function(array, i, &compares);
         assert(isOrdered(array, i));
         printf("For %3d elements: %7d compares\n", i, compares);
+        free(array);
     }
 
     printf("\nRandom order array results:\n");
@@ -81,6 +83,7 @@ void comparesExperiment(SortingFunction function, char *sortingFunctionName, int
         function(array, i, &compares);
         assert(isOrdered(array, i));
         printf("For %3d elements: %7d compares\n", i, compares);
+        free(array);
     }
 
     printf("\n");
