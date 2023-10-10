@@ -3,6 +3,7 @@ project(discrete_math C)
 
 set(CMAKE_C_STANDARD 23)
 
+add_subdirectory(include)
 add_subdirectory(./libs/alg)
 
 add_executable(lab1_task5 ./lab1/task5/main.c)
@@ -17,7 +18,7 @@ target_link_libraries(lab2_task2 alg)
 add_executable(lab2_task3 ./lab2/task3/main.c)
 target_link_libraries(lab2_task3 alg)
 
-add_executable(t ./lab3/main.c)
-target_link_libraries(t alg)
+add_executable(lab3_task1 ./lab3/main.c)
+target_link_libraries(lab3_task1 alg)
 
 # Zero library

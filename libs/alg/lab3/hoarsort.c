@@ -1,13 +1,13 @@
-#include "sorts.h"
+#include <lab3/sorts.h>
 
 #include <malloc.h>
 
 void hoarSort(int *data, int size, int *comps) {
-    if (size <= 1) return;
+    if (INC_COMPARES(comps) && size <= 1) return;
 
     int i = 0, j = size - 1;
     int midElement = data[size / 2];
-    while (1) {
+    while (INC_COMPARES(comps)) {
         if (INC_COMPARES(comps) && data[i] < midElement) {
             i++;
             continue;
@@ -18,7 +18,7 @@ void hoarSort(int *data, int size, int *comps) {
             continue;
         }
 
-        if (i >= j)
+        if (INC_COMPARES(comps) && i >= j)
             break;
 
         swap(data + (i++), data + (j--));

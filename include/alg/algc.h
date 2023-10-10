@@ -25,8 +25,8 @@ extern "C"
 
     char *strByteToByteArray(char *in);
 
-    #include "lab2/string.h"
-    #include "lab3/sorts.h"
+    #include <lab2/string.h>
+    #include <lab3/sorts.h>
 
 #ifdef __cplusplus
 }

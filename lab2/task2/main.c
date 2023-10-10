@@ -1,4 +1,4 @@
-#include "../../libs/alg/algc.h"
+#include <algc.h>
 
 #include <stdio.h>
 #include <assert.h>

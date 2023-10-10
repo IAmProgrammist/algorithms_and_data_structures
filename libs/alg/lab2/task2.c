@@ -1,4 +1,4 @@
-#include "string.h"
+#include <lab2/string.h>
 
 #include <stdio.h>
 #include <stdbool.h>

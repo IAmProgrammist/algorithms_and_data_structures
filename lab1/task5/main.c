@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../../libs/alg/algc.h"
+#include <algc.h>
 
 typedef enum {red, yellow, green} colors;
 
