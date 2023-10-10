@@ -5,6 +5,8 @@
 
 #include <stdbool.h>
 
+#define SEARCH_UTILITY_EXPERIMENT_ITERATIONS_AMOUNT 10000
+
 typedef int (*SearchingFunction)(int*, int, int, int*);
 typedef int (*OrderedSearchingFunction)(int*, int, int, int*);
 
