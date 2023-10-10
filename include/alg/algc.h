@@ -27,6 +27,7 @@ extern "C"
 
     #include <lab2/string.h>
     #include <lab3/sorts.h>
+    #include <lab4/search.h>
 
 #ifdef __cplusplus
 }
