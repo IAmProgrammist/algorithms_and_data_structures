@@ -12,7 +12,9 @@ SET (lab3funcs ./lab3/utility.c
 SET (lab4funcs ./lab4/utility.c
 ./lab4/linearsearch.c
 ./lab4/linearquicksearch.c
-./lab4/orderedlinearquicksearch.c)
+./lab4/orderedlinearquicksearch.c
+./lab4/binarysearch.c
+./lab4/blocksearch.c)
 
 add_library(alg ${lab1funcs} ${lab2funcs} ${lab3funcs} ${lab4funcs})
 target_include_directories(alg PUBLIC ../../include/alg)
