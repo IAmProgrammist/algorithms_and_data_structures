@@ -1,5 +1,6 @@
-#include <algc.h>
 #include <time.h>
+
+#include <algc.h>
 
 #define LOW 5
 #define HIGH 45

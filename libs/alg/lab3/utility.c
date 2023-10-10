@@ -4,6 +4,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 void swap(int* a, int* b) {
     int t = *a;
