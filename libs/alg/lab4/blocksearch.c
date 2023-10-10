@@ -13,17 +13,14 @@ int orderedBlockSearch(int* a, int size, int searchElement, int* comps) {
         if (INC_COMPARES(comps) && a[blockEndIndex - 1] < searchElement) continue;
 
         int j = blockBeginIndex;
-        while (INC_COMPARES(comps) && j < blockEndIndex) {
+        while (INC_COMPARES(comps) && j < blockEndIndex && INC_COMPARES(comps) && a[j] != searchElement) {
             if (INC_COMPARES(comps) && a[j] > searchElement)
-                return size;
-
-            if (INC_COMPARES(comps) && a[j] == searchElement)
-                return j;
+                j = size - 1;
             
             j++;
         }
 
-        return size;
+        return j;
     }
 
     return size;
