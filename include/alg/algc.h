@@ -29,6 +29,8 @@ extern "C"
     #include <lab3/sorts.h>
     #include <lab4/search.h>
     #include <lab5/singlyconnectedlist.h>
+    #include <lab6/stack.h>
+    #include <lab6/queue.h>
 
 #ifdef __cplusplus
 }

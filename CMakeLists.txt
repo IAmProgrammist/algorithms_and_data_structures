@@ -30,5 +30,11 @@ target_link_libraries(lab5_task2 alg)
 add_executable(lab5_task3 ./lab5/task3/main.c)
 target_link_libraries(lab5_task3 alg)
 
+add_executable(lab6_task5 ./lab6/task5/main.c)
+target_link_libraries(lab6_task5 alg)
+
+add_executable(lab6_task6 ./lab6/task6/main.c)
+target_link_libraries(lab6_task6 alg)
+
 
 # Zero library
