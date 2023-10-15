@@ -28,6 +28,7 @@ extern "C"
     #include <lab2/string.h>
     #include <lab3/sorts.h>
     #include <lab4/search.h>
+    #include <lab5/singlyconnectedlist.h>
 
 #ifdef __cplusplus
 }

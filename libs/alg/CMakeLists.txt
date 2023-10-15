@@ -15,8 +15,9 @@ SET (lab4funcs ./lab4/utility.c
 ./lab4/orderedlinearquicksearch.c
 ./lab4/binarysearch.c
 ./lab4/blocksearch.c)
+SET (lab5funcs ./lab5/task2.c)
 
-add_library(alg ${lab1funcs} ${lab2funcs} ${lab3funcs} ${lab4funcs})
+add_library(alg ${lab1funcs} ${lab2funcs} ${lab3funcs} ${lab4funcs} ${lab5funcs})
 target_include_directories(alg PUBLIC ../../include/alg)
 
 target_link_libraries(alg m)
