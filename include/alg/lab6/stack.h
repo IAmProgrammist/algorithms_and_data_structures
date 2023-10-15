@@ -3,9 +3,10 @@
 
 #include <lab5/singlyconnectedlist.h>
 
-extern const int StackOk;
-extern const int StackUnder;
-extern const int StackOver;
+#define StackOk ListOk
+#define StackUnder ListUnder
+#define StackOver ListNotMem
+
 extern int StackError;
 
 typedef List Stack;

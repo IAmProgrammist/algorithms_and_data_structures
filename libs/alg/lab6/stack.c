@@ -1,9 +1,6 @@
 #include <lab5/singlyconnectedlist.h>
 #include <lab6/stack.h>
 
-const int StackOk = 0;
-const int StackUnder = ListUnder;
-const int StackOver = ListEnd;
 int StackError = StackOk;
 
 void InitStack(Stack *s) {

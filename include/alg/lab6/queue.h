@@ -1,19 +1,20 @@
 #ifndef QUEUE
 #define QUEUE
 
-#define QUEUE_SIZE 1000
+#define QueueSize 1000
 
-extern const int QueueOk;
-extern const int QueueUnder;
-extern const int QueueOver;
+#define QueueOk 0;
+#define QueueUnder 1;
+#define QueueOver 2;
+
 extern int QueueError;
 
 typedef int BaseType; 
 
 typedef struct {
-    BaseType Buf[QUEUE_SIZE];
-    unsigned Uk1; 
-    unsigned Uk2;
+    BaseType Buf[QueueSize];
+    unsigned Uk1; // Голова
+    unsigned Uk2; // Хвост
     unsigned N;
 } Queue;
 
