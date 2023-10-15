@@ -37,6 +37,11 @@ void PutList(List *L, BaseType E) {
 }
 
 void GetList(List *L, BaseType *E) {
+    if (Count(L) == 0) {
+        ListError = ListUnder;
+        return;
+    }
+
     if (EndList(L)) {
         ListError = ListEnd;
         return;
@@ -57,12 +62,12 @@ void ReadList(List *L,BaseType *E) {
         return;
     }
 
-    ptrel currentElement = L->ptr;
     if (EndList(L)) {
         ListError = ListEnd;
         return;
     }
 
+    ptrel currentElement = L->ptr;
     *E = currentElement->next->data;
     ListError = ListOk;
 }
