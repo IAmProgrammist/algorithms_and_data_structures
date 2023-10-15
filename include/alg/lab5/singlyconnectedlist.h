@@ -1,24 +1,24 @@
 #ifndef SINGLY_CONNECTED_LIST
 #define SINGLY_CONNECTED_LIST
 
-const int ListOk = 0;
-const int ListNotMem = 1;
-const int ListUnder = 2;
-const int ListEnd = 3;
+extern const int ListOk;
+extern const int ListNotMem;
+extern const int ListUnder;
+extern const int ListEnd;
 
 typedef int BaseType;
 
-typedef struct element *ptrel;
-typedef struct element {
+typedef struct element_ {
     BaseType data;
-    ptrel next;
-};
+    struct element_ * next;
+} element;
+typedef element* ptrel;
 
-typedef struct List {
+typedef struct {
     ptrel Start;
     ptrel ptr;
     unsigned int N;
-}
+} List;
 
 extern int ListError;
 
