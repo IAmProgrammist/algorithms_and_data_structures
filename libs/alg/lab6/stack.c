@@ -4,8 +4,7 @@
 int StackError = StackOk;
 
 void InitStack(Stack *s) {
-    List l;
-    InitList(&l);
+    InitList(s);
 
     StackError = ListError;
 }
