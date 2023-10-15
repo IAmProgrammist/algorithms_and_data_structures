@@ -3,11 +3,6 @@
 #include <stddef.h>
 #include <malloc.h>
 
-const int ListOk = 0;
-const int ListNotMem = 1;
-const int ListUnder = 2;
-const int ListEnd = 3;
-
 int ListError = ListOk;
 
 void InitList(List *L) {
