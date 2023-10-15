@@ -1,5 +1,7 @@
 #include <lab6/queue.h>
 
+int QueueError = QueueOk; 
+
 void InitQueue(Queue* f) {
     f->Uk1 = 0;
     f->Uk2 = 0;
@@ -15,7 +17,9 @@ void PutQueue(Queue *f, BaseType E) {
     }
 
     QueueError = QueueOk;
-    f->Buf[f->Uk2 = (f->Uk2 + 1) % QueueSize] = E;
+    f->Buf[f->Uk2] = E;
+    f->Uk2 = (f->Uk2 + 1) % QueueSize;
+    f->N++;
 }
 
 void GetQueue(Queue *f, BaseType *E) {
@@ -27,6 +31,7 @@ void GetQueue(Queue *f, BaseType *E) {
     QueueError = QueueOk;
     *E = f->Buf[f->Uk1];
     f->Uk1 = (f->Uk1 + 1) % QueueSize;
+    f->N--;
 }
 
 void ReadQueue(Queue *f, BaseType *E) {

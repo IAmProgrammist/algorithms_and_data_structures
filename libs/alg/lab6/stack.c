@@ -26,8 +26,8 @@ int EmptyStack(Stack s) {
     return s.N == 0;
 }
 
-void ReadStack(Stack s, BaseType *E) {
-    ReadStack(s, E);
+void ReadStack(Stack *s, BaseType *E) {
+    ReadList(s, E);
 
     StackError = ListError;
 } 

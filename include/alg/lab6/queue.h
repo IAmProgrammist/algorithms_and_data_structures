@@ -3,9 +3,9 @@
 
 #define QueueSize 1000
 
-#define QueueOk 0;
-#define QueueUnder 1;
-#define QueueOver 2;
+#define QueueOk 0
+#define QueueUnder 1
+#define QueueOver 2
 
 extern int QueueError;
 
