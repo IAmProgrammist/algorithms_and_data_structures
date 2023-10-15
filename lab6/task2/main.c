@@ -5,5 +5,8 @@
 #include <string.h>
 
 int main() {
+    Stack s;
+    InitStack(&s);
+
     return 0;
 }
