@@ -9,7 +9,9 @@
 
 extern int QueueError;
 
+#ifndef CUSTOM_BASE_TYPE
 typedef int BaseType; 
+#endif
 
 typedef struct {
     BaseType Buf[QueueSize];

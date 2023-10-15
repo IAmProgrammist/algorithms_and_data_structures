@@ -1,6 +1,12 @@
 #ifndef STACK
 #define STACK
 
+#define SINGLY_CONNECTED_LIST_CUSTOM_BASE_TYPE
+
+#ifndef CUSTOM_BASE_TYPE
+typedef int BaseType;
+#endif
+
 #include <lab5/singlyconnectedlist.h>
 
 #define StackOk ListOk

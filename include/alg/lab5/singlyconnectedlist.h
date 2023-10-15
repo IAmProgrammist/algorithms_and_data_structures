@@ -6,7 +6,9 @@
 #define ListUnder 2
 #define ListEnd 3
 
+#ifndef CUSTOM_BASE_TYPE
 typedef int BaseType;
+#endif
 
 typedef struct element_ {
     BaseType data;
