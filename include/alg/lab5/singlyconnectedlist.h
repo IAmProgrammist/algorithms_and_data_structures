@@ -1,10 +1,10 @@
 #ifndef SINGLY_CONNECTED_LIST
 #define SINGLY_CONNECTED_LIST
 
-extern const int ListOk;
-extern const int ListNotMem;
-extern const int ListUnder;
-extern const int ListEnd;
+#define ListOk 0
+#define ListNotMem 1
+#define ListUnder 2
+#define ListEnd 3
 
 typedef int BaseType;
 
