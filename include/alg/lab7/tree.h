@@ -27,7 +27,6 @@ extern size_t Size;
 Tree InitTree(unsigned size);
 
 // создание корня
-// Эта функция должна вызываться в начале программы
 Tree CreateRoot(); 
 
 //запись данных
