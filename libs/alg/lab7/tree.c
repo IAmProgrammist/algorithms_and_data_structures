@@ -41,6 +41,8 @@ void InitTree(Tree T, unsigned size) {
         return;
     }
 
+    Size += size;
+
     // Ничего не делаем
     if (size == 0) {
         TreeError = TreeOk;
@@ -48,21 +50,17 @@ void InitTree(Tree T, unsigned size) {
     }
 
     size_t ind = NewMem();
-    Tree currentTree;
+    MemTree[T].RSon = ind;
+    size--;
+    Tree currentTree = ind;
     TreeError = TreeOk;
-    
-    while (TreeError == TreeOk) {
-        if (TAKEN_ELEMENTS[MemTree[T].RSon])
-            MemTree[currentTree].LSon = ind;
-        else
-            MemTree[T].RSon = ind;
 
-        currentTree = ind;
-
-        size--;
-        if (size == 0) break;
-
+    while (size != 0) {
         ind = NewMem();
+        if (TreeError != TreeOk) break;
+
+        MemTree[currentTree].LSon = ind;
+        currentTree = ind;
     }
 }
 
@@ -91,13 +89,92 @@ void DisposeMem(size_t n) {
     TAKEN_ELEMENTS[n] = false;
 }
 
-/*void WriteDataTree(Tree T, TreeBaseType E) //запись данных
-TreeBaseType ReadDataTree(Tree T)//чтение
-int IsLSon(Tree T)//1 — есть левый сын, 0 — нет
-int IsRSon(Tree T)//1 — есть правый сын, 0 — нет
-Tree MoveToLSon(Tree T)// перейти к левому сыну, где T — адрес ячейки, содержащей адрес текущей вершины, TS — адрес ячейки, содержащей адрес корня левого поддерева(левого сына)
-Tree MoveToRSon(Tree T)//перейти к правому сыну
-int IsEmptyTree(Tree T)//1 — пустое дерево,0 — не пустое
-void DelTree(Tree T)//удаление листа
-void InitMem() /*связывает все элементы массива в список свободных
+void WriteDataTree(Tree T, TreeBaseType E) {
+    if (!TAKEN_ELEMENTS[T]) {
+        TreeError = TreeUnder;
+        return;
+    }
+
+    TreeError = TreeOk;
+    MemTree[T].data = E;
+}
+
+TreeBaseType ReadDataTree(Tree T) {
+    if (!TAKEN_ELEMENTS[T]) {
+        TreeError = TreeUnder;
+        return NULL;
+    }
+
+    TreeError = TreeOk;
+    return MemTree[T].data;
+}
+
+int IsLSon(Tree T) {
+    if (!TAKEN_ELEMENTS[T]) {
+        TreeError = TreeUnder;
+        return false;
+    }
+
+    TreeError = TreeOk;
+    return TAKEN_ELEMENTS[MemTree[T].LSon];
+}
+
+int IsRSon(Tree T) {
+    if (!TAKEN_ELEMENTS[T]) {
+        TreeError = TreeUnder;
+        return false;
+    }
+
+    TreeError = TreeOk;
+    return TAKEN_ELEMENTS[MemTree[T].RSon];
+}
+
+Tree MoveToLSon(Tree T) {
+    if (IsLSon(T)) return MemTree[T].LSon;
+}
+
+Tree MoveToRSon(Tree T) {
+    if (IsRSon(T)) return MemTree[T].RSon;
+}
+
+int IsEmptyTree(Tree T) {
+    return Size <= 2;
+}
+
+void _DelSubTree(Tree T) {
+    if (!TAKEN_ELEMENTS[T]) {
+        TreeError = TreeUnder;
+        return;
+    }
+
+    _DelSubTree(MemTree[T].RSon);
+    _DelSubTree(MemTree[T].LSon);
+    TAKEN_ELEMENTS[T] = false;
+}
+
+void DelTree(Tree T) {
+    TreeError = TreeOk;
+    if (!TAKEN_ELEMENTS[T]) {
+        TreeError = TreeUnder;
+        return;
+    }
+
+    _DelSubTree(MemTree[T].RSon);
+    TAKEN_ELEMENTS[T] = false;
+}
+
+void InitMem() {
+    TreeError = TreeOk;
+    for (size_t i = 2; i < TreeBufferSize; i++)
+        TAKEN_ELEMENTS[i] = false;
+}
+
+/*//чтение
+//1 — есть левый сын, 0 — нет
+//1 — есть правый сын, 0 — нет
+// перейти к левому сыну, где T — адрес ячейки, содержащей адрес текущей вершины, TS — адрес ячейки, содержащей адрес корня левого поддерева(левого сына)
+//перейти к правому сыну
+//1 — пустое дерево,0 — не пустое
+//удаление листа
+ /*связывает все элементы массива в список свободных
 элементов*/
