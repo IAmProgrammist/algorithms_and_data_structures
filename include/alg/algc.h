@@ -31,6 +31,7 @@ extern "C"
     #include <lab5/singlyconnectedlist.h>
     #include <lab6/stack.h>
     #include <lab6/queue.h>
+    #include <lab7/tree.h>
 
 #ifdef __cplusplus
 }
