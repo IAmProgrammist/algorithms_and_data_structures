@@ -24,7 +24,7 @@ extern Element MemTree[TreeBufferSize];
 extern int TreeError;
 extern size_t Size;
 // инициализация дерева
-void InitTree(Tree T, unsigned size);
+Tree InitTree(unsigned size);
 
 // создание корня
 // Эта функция должна вызываться в начале программы
@@ -69,5 +69,9 @@ size_t NewMem();
 /*делает n-й элемент массива свободным и
 включает его в ССЭ*/
 void DisposeMem(size_t n);
+
+int BuildTree(Tree T, char* input);
+void CopyTree(Tree dst, Tree src);
+bool CompTree(Tree T1, Tree T2);
 
 #endif 

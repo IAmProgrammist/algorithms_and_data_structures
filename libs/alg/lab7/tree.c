@@ -8,88 +8,79 @@ size_t Size = 0;
 
 #define TAKEN_ELEMENTS ((bool *)MemTree[1].data)
 
-Tree CreateRoot() {
-    if (TreeBufferSize < 2) {
-        TreeError = TreeNotMem;
+Tree InitTree(unsigned size) {
+    if (size < 2) {
+        TreeError = TreeUnder;
         return 0;
     }
 
-    Size = 2;
+    if (size > TreeBufferSize) {
+        TreeError = TreeNotMem;
+        return 0;
+    }
+    Size = size;
+
+    InitMem();
+    
     TreeError = TreeOk;
     MemTree[0].data = NULL;
     MemTree[0].LSon = 1;
     MemTree[0].RSon = 0;
-
-    MemTree[1].LSon = 0;
-    MemTree[1].RSon = 0;
-    bool *takenElements = calloc(TreeBufferSize, sizeof(bool));
-    takenElements[0] = true;
-    takenElements[1] = true;
-    MemTree[1].data = takenElements;
+    TAKEN_ELEMENTS[0] = true;
 
     return 0;
-} 
+}
 
-void InitTree(Tree T, unsigned size) {
-    // Лист должен существовать, кроме того он должен быть именно листом, а не деревом
-    if (!TAKEN_ELEMENTS[T] || IsRSon(T)) {
+void InitMem() {
+    if (Size < 2) {
         TreeError = TreeUnder;
         return;
     }
 
-    // Невозможно выделить столько листов
-    if (Size + size > TreeBufferSize) {
+    if (Size > TreeBufferSize) {
         TreeError = TreeNotMem;
         return;
     }
+    
+    bool *takenElements = calloc(Size, sizeof(bool));
 
-    Size += size;
-
-    // Ничего не делаем
-    if (size == 0) {
-        TreeError = TreeOk;
-        return;
-    }
-
-    size_t ind = NewMem();
-    MemTree[T].RSon = ind;
-    size--;
-    Tree currentTree = ind;
-    MemTree[currentTree].data = NULL;
-    MemTree[currentTree].RSon = 0;
-    MemTree[currentTree].LSon = 0;
-    TreeError = TreeOk;
-
-    while (size != 0) {
-        ind = NewMem();
-        if (TreeError != TreeOk) break;
-
-        MemTree[currentTree].LSon = ind;
-        currentTree = ind;
-        MemTree[currentTree].data = NULL;
-        MemTree[currentTree].RSon = 0;
-        MemTree[currentTree].LSon = 0;
-
-        size--;
-    }
+    MemTree[1].LSon = 0;
+    MemTree[1].RSon = 0;
+    MemTree[1].data = takenElements;
+    TAKEN_ELEMENTS[1] = true;
 }
+
+Tree CreateRoot() {
+    size_t newInd = NewMem();
+    if (TreeError != TreeOk) return 0;
+
+    TAKEN_ELEMENTS[newInd] = true;
+    MemTree[newInd].data = NULL;
+    MemTree[newInd].RSon = 0;
+    MemTree[newInd].LSon = 0;
+
+    return newInd;
+} 
 
 
 int EmptyMem() {
     TreeError = TreeOk;
-    return Size == TreeBufferSize;
+
+    for (size_t i = 0; i < Size; i++)
+        if (!TAKEN_ELEMENTS[i]) return false;
+
+    return true;
 }
 
 size_t NewMem() {
-    if (EmptyMem()) {
-        TreeError = TreeNotMem;
-        return 0;
-    }
-
     TreeError = TreeOk;
-    for (size_t i = 0; i < TreeBufferSize; i++) {
+    for (size_t i = 0; i < Size; i++) {
         if (!TAKEN_ELEMENTS[i]) {
             TAKEN_ELEMENTS[i] = true;
+            MemTree[i].data = NULL;
+            MemTree[i].LSon = 0;
+            MemTree[i].RSon = 0;
+
             return i;
         };
     }
@@ -97,6 +88,7 @@ size_t NewMem() {
     TreeError = TreeNotMem;
     return 0;
 }
+
 void DisposeMem(size_t n) {
     TreeError = TreeOk;
     TAKEN_ELEMENTS[n] = false;
@@ -145,23 +137,21 @@ int IsRSon(Tree T) {
 Tree MoveToLSon(Tree T) {
     if (IsLSon(T)) return MemTree[T].LSon;
 
+    TreeError = TreeUnder;
     return 0;
 }
 
 Tree MoveToRSon(Tree T) {
     if (IsRSon(T)) return MemTree[T].RSon;
 
+    TreeError = TreeUnder;
     return 0;
 }
 
 int IsEmptyTree(Tree T) {
-    if (!TAKEN_ELEMENTS[T]) {
-        TreeError = TreeUnder;
-        return false;
-    }
-
     TreeError = TreeOk;
-    return !IsRSon(T);
+
+    return MemTree[T].RSon == 0;
 }
 
 void _DelSubTree(Tree T) {
@@ -179,24 +169,107 @@ void _DelSubTree(Tree T) {
     MemTree[T].LSon = 0;
     MemTree[T].data = NULL;
     
-    TAKEN_ELEMENTS[T] = false;
+    DisposeMem(T);
 }
 
 void DelTree(Tree T) {
     TreeError = TreeOk;
+    // Please do not the important
+    if (T == 0 || T == 1)
+        return;
+
     if (!TAKEN_ELEMENTS[T]) {
         TreeError = TreeUnder;
         return;
     }
 
-    _DelSubTree(MemTree[T].RSon);
-    MemTree[T].RSon = 0;
+    if (IsRSon(T)) {
+        _DelSubTree(MemTree[T].RSon);
+        MemTree[T].RSon = 0;
+    }
+
+    if (IsLSon(T)) {
+        _DelSubTree(MemTree[T].LSon);
+        MemTree[T].LSon = 0;
+    }
+    DisposeMem(T);
 }
 
-void InitMem() {
-    TreeError = TreeOk;
-    for (size_t i = 2; i < TreeBufferSize; i++)
-        TAKEN_ELEMENTS[i] = false;
+#define NAME_BUFFER_SIZE 100
 
-    MemTree[0].RSon = 0;
+int BuildTree(Tree T, char* input) {
+    char* startInput = input;
+    while (isspace(*input))
+        input++;
+    
+    if (*input != '(')
+        return -1;
+    
+    input++;
+
+    char *buffer = calloc(NAME_BUFFER_SIZE, sizeof(char));
+    int bufferIndex = 0;
+    bool shouldWriteData = true;
+    bool anyChild = false;
+
+    while (*input != ')') {
+        if (*input == '\0')
+            return -1;
+        else if (*input == '(') {
+            if (shouldWriteData) {
+                WriteDataTree(T, buffer);
+                shouldWriteData = false;
+            }
+
+            size_t newIndex = NewMem();
+            if (!anyChild) { 
+                anyChild = true;
+                MemTree[T].RSon = newIndex;
+            } else 
+                MemTree[T].LSon = newIndex;
+
+            int res = BuildTree(newIndex, input);
+            if (res == -1) return -1;
+
+            input += res + 1;
+            T = newIndex;
+        } else if (shouldWriteData)
+            buffer[bufferIndex] = *(input++);
+        else input++;
+    }
+
+    if (shouldWriteData) WriteDataTree(T, buffer);
+
+    return input - startInput;
+}
+
+void CopyTree(Tree dst, Tree src) {
+    WriteDataTree(dst, ReadDataTree(src));
+    if (TreeError != TreeOk) return;
+
+    Tree RSon;
+    if ((RSon = MoveToRSon(src)) && TreeError == TreeOk) {
+        Tree newTree = NewMem();
+        if (TreeError != TreeOk)
+            return;
+        MemTree[dst].RSon = newTree;
+
+        CopyTree(newTree, RSon);
+    }
+
+    Tree LSon;
+    if ((LSon = MoveToLSon(src)) && TreeError == TreeOk) {
+        Tree newTree = NewMem();
+        if (TreeError != TreeOk)
+            return;
+        MemTree[dst].LSon = newTree;
+
+        CopyTree(newTree, LSon);
+    }
+}
+
+bool CompTree(Tree T1, Tree T2) {
+    return ((ReadDataTree(T1) == ReadDataTree(T2)) && TreeError == TreeOk) && 
+    (IsRSon(T1) == IsRSon(T2) ? !IsRSon(T1) || CompTree(MemTree[T1].RSon, MemTree[T2].RSon) : false ) && 
+    (IsLSon(T1) == IsLSon(T2) ? !IsLSon(T1) || CompTree(MemTree[T1].LSon, MemTree[T2].LSon) : false );
 }

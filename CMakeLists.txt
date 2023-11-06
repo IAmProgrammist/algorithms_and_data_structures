@@ -40,13 +40,7 @@ target_include_directories(lab6_task6 PUBLIC ./include/alg)
 add_executable(lab7_task2 ./lab7/task2/main.c)
 target_link_libraries(lab7_task2 alg)
 
-add_executable(lab7_task3a ./lab7/task3a/main.c)
-target_link_libraries(lab7_task3a alg)
-
-add_executable(lab7_task3b ./lab7/task3b/main.c)
-target_link_libraries(lab7_task3b alg)
-
-add_executable(lab7_task3c ./lab7/task3c/main.c)
-target_link_libraries(lab7_task3c alg)
+add_executable(lab7_task3 ./lab7/task3/main.c)
+target_link_libraries(lab7_task3 alg)
 
 # Zero library
