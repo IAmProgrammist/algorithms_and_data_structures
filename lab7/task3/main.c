@@ -7,8 +7,8 @@
 
 int main() {
     InitTree(TreeBufferSize);
-    Tree root = CreateRoot();
-    int res = BuildTree(MoveToRSon(root), "(A(B(C)(D))(e(F)(G)(H)))");
+    Tree fromBrackets = CreateRoot();
+    int res = BuildTree(fromBrackets, "(A(B(C)(D))(e(F)(G)(H)))");
 
     if (res == -1) {
         printf("unable to parse");
@@ -16,8 +16,8 @@ int main() {
     }
 
     Tree secondRoot = CreateRoot();
-    CopyTree(root, secondRoot);
-    assert(CompTree(root, secondRoot));
+    CopyTree(secondRoot, fromBrackets);
+    assert(CompTree(fromBrackets, secondRoot));
 
     return 0;
 }

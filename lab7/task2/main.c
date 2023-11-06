@@ -2,25 +2,25 @@
 
 #include <algc.h>
 
-#define TAKEN_ELEMENTS ((bool *)MemTree[1].data)
+#define TAKEN_ELEMENTS ((bool *)MemTree[0].data)
 
 void testInitTree() {
-    Tree root = InitTree(1);
+    Tree root = InitTree(0);
     assert(TreeError == TreeUnder);
 
     root = InitTree(10);
-    assert(TreeError == TreeOk && MemTree[root].LSon != 0 && Size == 10);
+    assert(TreeError == TreeOk && Size == 10);
 
     root = InitTree(TreeBufferSize + 1);
     assert(TreeError == TreeNotMem);
 }
 
 void testCreateRoot() {
-    Tree init = InitTree(2);
+    Tree init = InitTree(1);
     Tree root = CreateRoot();
     assert(TreeError == TreeNotMem);
 
-    init = InitTree(3);
+    init = InitTree(2);
     root = CreateRoot();
     assert(TreeError == TreeOk);
     assert(IsEmptyTree(root));
@@ -29,23 +29,23 @@ void testCreateRoot() {
 }
 
 void testMemEmpty() {
-    Tree init = InitTree(2);
+    Tree init = InitTree(1);
     assert(EmptyMem());
 
-    init = InitTree(3);
+    init = InitTree(2);
     assert(!EmptyMem());
 
-    init = InitTree(3);
+    init = InitTree(2);
     Tree root = CreateRoot();
     assert(EmptyMem());
 }
 
 void testNewMem() {
-    Tree init = InitTree(2);
+    Tree init = InitTree(1);
     Tree newEl = NewMem();
     assert(TreeError == TreeNotMem);
 
-    init = InitTree(3);
+    init = InitTree(2);
     newEl = NewMem();
     assert(TreeError == TreeOk && TAKEN_ELEMENTS[newEl]);
     NewMem();
@@ -53,7 +53,7 @@ void testNewMem() {
 }
 
 void testDisposeMem() {
-    Tree init = InitTree(3);
+    Tree init = InitTree(2);
     Tree newEl = NewMem();
     assert(TreeError == TreeOk && TAKEN_ELEMENTS[newEl]);
     DisposeMem(newEl);
@@ -61,7 +61,7 @@ void testDisposeMem() {
 }
 
 void testWriteReadDataTree() {
-    Tree init = InitTree(3);
+    Tree init = InitTree(2);
     Tree root = CreateRoot();
 
     int someVal = 15;

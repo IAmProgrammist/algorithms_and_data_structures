@@ -6,10 +6,10 @@ Element MemTree[TreeBufferSize];
 int TreeError = TreeOk;
 size_t Size = 0;
 
-#define TAKEN_ELEMENTS ((bool *)MemTree[1].data)
+#define TAKEN_ELEMENTS ((bool *)MemTree[0].data)
 
 Tree InitTree(unsigned size) {
-    if (size < 2) {
+    if (size < 1) {
         TreeError = TreeUnder;
         return 0;
     }
@@ -20,19 +20,14 @@ Tree InitTree(unsigned size) {
     }
     Size = size;
 
-    InitMem();
-    
     TreeError = TreeOk;
-    MemTree[0].data = NULL;
-    MemTree[0].LSon = 1;
-    MemTree[0].RSon = 0;
-    TAKEN_ELEMENTS[0] = true;
+    InitMem();
 
     return 0;
 }
 
 void InitMem() {
-    if (Size < 2) {
+    if (Size < 1) {
         TreeError = TreeUnder;
         return;
     }
@@ -42,12 +37,13 @@ void InitMem() {
         return;
     }
     
+    TreeError = TreeOk;
     bool *takenElements = calloc(Size, sizeof(bool));
 
-    MemTree[1].LSon = 0;
-    MemTree[1].RSon = 0;
-    MemTree[1].data = takenElements;
-    TAKEN_ELEMENTS[1] = true;
+    MemTree[0].LSon = 0;
+    MemTree[0].RSon = 0;
+    MemTree[0].data = takenElements;
+    TAKEN_ELEMENTS[0] = true;
 }
 
 Tree CreateRoot() {
@@ -175,7 +171,7 @@ void _DelSubTree(Tree T) {
 void DelTree(Tree T) {
     TreeError = TreeOk;
     // Please do not the important
-    if (T == 0 || T == 1)
+    if (T == 0)
         return;
 
     if (!TAKEN_ELEMENTS[T]) {
