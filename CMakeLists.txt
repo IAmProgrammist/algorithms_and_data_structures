@@ -37,4 +37,7 @@ add_executable(lab6_task6
 ./lab6/task6/main.c )
 target_include_directories(lab6_task6 PUBLIC ./include/alg)
 
+add_executable(lab7_task2 ./lab7/task2/main.c)
+target_link_libraries(lab7_task2 alg)
+
 # Zero library

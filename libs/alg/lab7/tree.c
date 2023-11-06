@@ -26,11 +26,13 @@ Tree CreateRoot() {
     takenElements[0] = true;
     takenElements[1] = true;
     MemTree[1].data = takenElements;
+
+    return 0;
 } 
 
 void InitTree(Tree T, unsigned size) {
     // Лист должен существовать, кроме того он должен быть именно листом, а не деревом
-    if (TAKEN_ELEMENTS[T] && !TAKEN_ELEMENTS[MemTree[T].RSon]) {
+    if (!TAKEN_ELEMENTS[T] || IsRSon(T)) {
         TreeError = TreeUnder;
         return;
     }
@@ -53,6 +55,9 @@ void InitTree(Tree T, unsigned size) {
     MemTree[T].RSon = ind;
     size--;
     Tree currentTree = ind;
+    MemTree[currentTree].data = NULL;
+    MemTree[currentTree].RSon = 0;
+    MemTree[currentTree].LSon = 0;
     TreeError = TreeOk;
 
     while (size != 0) {
@@ -61,6 +66,11 @@ void InitTree(Tree T, unsigned size) {
 
         MemTree[currentTree].LSon = ind;
         currentTree = ind;
+        MemTree[currentTree].data = NULL;
+        MemTree[currentTree].RSon = 0;
+        MemTree[currentTree].LSon = 0;
+
+        size--;
     }
 }
 
@@ -78,7 +88,10 @@ size_t NewMem() {
 
     TreeError = TreeOk;
     for (size_t i = 0; i < TreeBufferSize; i++) {
-        if (!TAKEN_ELEMENTS[i]) return i;
+        if (!TAKEN_ELEMENTS[i]) {
+            TAKEN_ELEMENTS[i] = true;
+            return i;
+        };
     }
 
     TreeError = TreeNotMem;
@@ -116,7 +129,7 @@ int IsLSon(Tree T) {
     }
 
     TreeError = TreeOk;
-    return TAKEN_ELEMENTS[MemTree[T].LSon];
+    return MemTree[T].LSon != 0 && TAKEN_ELEMENTS[MemTree[T].LSon];
 }
 
 int IsRSon(Tree T) {
@@ -126,19 +139,29 @@ int IsRSon(Tree T) {
     }
 
     TreeError = TreeOk;
-    return TAKEN_ELEMENTS[MemTree[T].RSon];
+    return MemTree[T].RSon != 0 && TAKEN_ELEMENTS[MemTree[T].RSon];
 }
 
 Tree MoveToLSon(Tree T) {
     if (IsLSon(T)) return MemTree[T].LSon;
+
+    return 0;
 }
 
 Tree MoveToRSon(Tree T) {
     if (IsRSon(T)) return MemTree[T].RSon;
+
+    return 0;
 }
 
 int IsEmptyTree(Tree T) {
-    return Size <= 2;
+    if (!TAKEN_ELEMENTS[T]) {
+        TreeError = TreeUnder;
+        return false;
+    }
+
+    TreeError = TreeOk;
+    return !IsRSon(T);
 }
 
 void _DelSubTree(Tree T) {
@@ -147,8 +170,15 @@ void _DelSubTree(Tree T) {
         return;
     }
 
-    _DelSubTree(MemTree[T].RSon);
-    _DelSubTree(MemTree[T].LSon);
+    if (IsRSon(T))
+        _DelSubTree(MemTree[T].RSon);
+    MemTree[T].RSon = 0;
+        
+    if (IsLSon(T))
+        _DelSubTree(MemTree[T].LSon);
+    MemTree[T].LSon = 0;
+    MemTree[T].data = NULL;
+    
     TAKEN_ELEMENTS[T] = false;
 }
 
@@ -160,21 +190,13 @@ void DelTree(Tree T) {
     }
 
     _DelSubTree(MemTree[T].RSon);
-    TAKEN_ELEMENTS[T] = false;
+    MemTree[T].RSon = 0;
 }
 
 void InitMem() {
     TreeError = TreeOk;
     for (size_t i = 2; i < TreeBufferSize; i++)
         TAKEN_ELEMENTS[i] = false;
-}
 
-/*//чтение
-//1 — есть левый сын, 0 — нет
-//1 — есть правый сын, 0 — нет
-// перейти к левому сыну, где T — адрес ячейки, содержащей адрес текущей вершины, TS — адрес ячейки, содержащей адрес корня левого поддерева(левого сына)
-//перейти к правому сыну
-//1 — пустое дерево,0 — не пустое
-//удаление листа
- /*связывает все элементы массива в список свободных
-элементов*/
+    MemTree[0].RSon = 0;
+}
