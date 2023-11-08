@@ -6,8 +6,6 @@ Element MemTree[TreeBufferSize];
 int TreeError = TreeOk;
 size_t Size = 0;
 
-#define TAKEN_ELEMENTS ((bool *)MemTree[0].data)
-
 Tree InitTree(unsigned size) {
     if (size < 1) {
         TreeError = TreeUnder;
@@ -27,6 +25,7 @@ Tree InitTree(unsigned size) {
 }
 
 void InitMem() {
+    TreeError = TreeOk;
     if (Size < 1) {
         TreeError = TreeUnder;
         return;
@@ -37,21 +36,18 @@ void InitMem() {
         return;
     }
     
-    TreeError = TreeOk;
-    bool *takenElements = calloc(Size, sizeof(bool));
+    for (PtrEl i = 0; i < Size - 1; i++) {
+        MemTree[i].LSon = i + 1;
+    }
 
-    MemTree[0].LSon = 0;
-    MemTree[0].RSon = 0;
-    MemTree[0].data = takenElements;
-    TAKEN_ELEMENTS[0] = true;
+    MemTree[Size - 1].LSon = 0;
 }
 
 Tree CreateRoot() {
+    TreeError = TreeOk;
     size_t newInd = NewMem();
     if (TreeError != TreeOk) return 0;
 
-    TAKEN_ELEMENTS[newInd] = true;
-    MemTree[newInd].data = NULL;
     MemTree[newInd].RSon = 0;
     MemTree[newInd].LSon = 0;
 
@@ -61,73 +57,48 @@ Tree CreateRoot() {
 
 int EmptyMem() {
     TreeError = TreeOk;
-
-    for (size_t i = 0; i < Size; i++)
-        if (!TAKEN_ELEMENTS[i]) return false;
-
-    return true;
+    return MemTree[0].LSon == 0;
 }
 
 size_t NewMem() {
     TreeError = TreeOk;
-    for (size_t i = 0; i < Size; i++) {
-        if (!TAKEN_ELEMENTS[i]) {
-            TAKEN_ELEMENTS[i] = true;
-            MemTree[i].data = NULL;
-            MemTree[i].LSon = 0;
-            MemTree[i].RSon = 0;
-
-            return i;
-        };
+    PtrEl result = MemTree[0].LSon;
+    if (result == 0) {
+        TreeError = TreeNotMem;
+        return 0;
     }
 
-    TreeError = TreeNotMem;
-    return 0;
+    MemTree[0].LSon = MemTree[result].LSon;
+    return result;
 }
 
 void DisposeMem(size_t n) {
     TreeError = TreeOk;
-    TAKEN_ELEMENTS[n] = false;
+    if (n == 0) return;
+
+    PtrEl oldElement = MemTree[0].LSon;
+    MemTree[0].LSon = n;
+    MemTree[n].LSon = oldElement;
 }
 
 void WriteDataTree(Tree T, TreeBaseType E) {
-    if (!TAKEN_ELEMENTS[T]) {
-        TreeError = TreeUnder;
-        return;
-    }
-
     TreeError = TreeOk;
     MemTree[T].data = E;
 }
 
 TreeBaseType ReadDataTree(Tree T) {
-    if (!TAKEN_ELEMENTS[T]) {
-        TreeError = TreeUnder;
-        return NULL;
-    }
-
     TreeError = TreeOk;
     return MemTree[T].data;
 }
 
 int IsLSon(Tree T) {
-    if (!TAKEN_ELEMENTS[T]) {
-        TreeError = TreeUnder;
-        return false;
-    }
-
     TreeError = TreeOk;
-    return MemTree[T].LSon != 0 && TAKEN_ELEMENTS[MemTree[T].LSon];
+    return MemTree[T].LSon != 0;
 }
 
 int IsRSon(Tree T) {
-    if (!TAKEN_ELEMENTS[T]) {
-        TreeError = TreeUnder;
-        return false;
-    }
-
     TreeError = TreeOk;
-    return MemTree[T].RSon != 0 && TAKEN_ELEMENTS[MemTree[T].RSon];
+    return MemTree[T].RSon != 0;
 }
 
 Tree MoveToLSon(Tree T) {
@@ -146,26 +117,7 @@ Tree MoveToRSon(Tree T) {
 
 int IsEmptyTree(Tree T) {
     TreeError = TreeOk;
-
-    return MemTree[T].RSon == 0;
-}
-
-void _DelSubTree(Tree T) {
-    if (!TAKEN_ELEMENTS[T]) {
-        TreeError = TreeUnder;
-        return;
-    }
-
-    if (IsRSon(T))
-        _DelSubTree(MemTree[T].RSon);
-    MemTree[T].RSon = 0;
-        
-    if (IsLSon(T))
-        _DelSubTree(MemTree[T].LSon);
-    MemTree[T].LSon = 0;
-    MemTree[T].data = NULL;
-    
-    DisposeMem(T);
+    return MemTree[T].RSon == 0 && MemTree[T].LSon == 0;
 }
 
 void DelTree(Tree T) {
@@ -174,26 +126,17 @@ void DelTree(Tree T) {
     if (T == 0)
         return;
 
-    if (!TAKEN_ELEMENTS[T]) {
-        TreeError = TreeUnder;
-        return;
-    }
+    DelTree(MemTree[T].RSon);
+    DelTree(MemTree[T].LSon);
 
-    if (IsRSon(T)) {
-        _DelSubTree(MemTree[T].RSon);
-        MemTree[T].RSon = 0;
-    }
-
-    if (IsLSon(T)) {
-        _DelSubTree(MemTree[T].LSon);
-        MemTree[T].LSon = 0;
-    }
     DisposeMem(T);
 }
 
 #define NAME_BUFFER_SIZE 100
 
 int BuildTree(Tree T, char* input) {
+    MemTree[T].RSon = 0;
+    MemTree[T].LSon = 0;
     char* startInput = input;
     while (isspace(*input))
         input++;
@@ -229,6 +172,7 @@ int BuildTree(Tree T, char* input) {
 
             input += res + 1;
             T = newIndex;
+            MemTree[T].LSon = 0;
         } else if (shouldWriteData)
             buffer[bufferIndex] = *(input++);
         else input++;

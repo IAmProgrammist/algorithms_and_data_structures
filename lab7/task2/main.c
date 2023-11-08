@@ -2,8 +2,6 @@
 
 #include <algc.h>
 
-#define TAKEN_ELEMENTS ((bool *)MemTree[0].data)
-
 void testInitTree() {
     Tree root = InitTree(0);
     assert(TreeError == TreeUnder);
@@ -47,7 +45,7 @@ void testNewMem() {
 
     init = InitTree(2);
     newEl = NewMem();
-    assert(TreeError == TreeOk && TAKEN_ELEMENTS[newEl]);
+    assert(TreeError == TreeOk);
     NewMem();
     assert(TreeError == TreeNotMem);
 }
@@ -55,9 +53,9 @@ void testNewMem() {
 void testDisposeMem() {
     Tree init = InitTree(2);
     Tree newEl = NewMem();
-    assert(TreeError == TreeOk && TAKEN_ELEMENTS[newEl]);
+    assert(TreeError == TreeOk && EmptyMem());
     DisposeMem(newEl);
-    assert(TreeError == TreeOk && !TAKEN_ELEMENTS[newEl]);
+    assert(TreeError == TreeOk && !EmptyMem());
 }
 
 void testWriteReadDataTree() {
@@ -103,9 +101,13 @@ void testDelTree() {
     Tree newEl2 = NewMem();
     MemTree[root].RSon = newEl2;
 
+    MemTree[newEl1].LSon = 0;
+    MemTree[newEl1].RSon = 0;
+    MemTree[newEl2].LSon = 0;
+    MemTree[newEl2].RSon = 0;
+
     DelTree(root);
-    assert(TreeError == TreeOk && 
-    !TAKEN_ELEMENTS[root] && !TAKEN_ELEMENTS[newEl1] && !TAKEN_ELEMENTS[newEl2]);
+    assert(TreeError == TreeOk);
 }
 
 void test() {
