@@ -69,8 +69,13 @@ size_t NewMem();
 включает его в ССЭ*/
 void DisposeMem(size_t n);
 
+// Строит дерево T по его скобочному представлению input
 int BuildTree(Tree T, char* input);
+
+// Копирует дерево src в dst.
 void CopyTree(Tree dst, Tree src);
+
+// Возвращает true, если деревья T1 и T2 равны.
 bool CompTree(Tree T1, Tree T2);
 
 #endif 
