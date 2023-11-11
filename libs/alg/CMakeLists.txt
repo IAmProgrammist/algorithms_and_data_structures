@@ -19,7 +19,7 @@ SET (lab5funcs ./lab5/task2.c)
 SET (lab6funcs ./lab6/stack.c ./lab6/queue.c)
 SET (lab7funcs ./lab7/tree.c)
 
-if(TARGET lab8_task2)
+if(TARGET lab8_task2 OR TARGET lab8_task3)
     SET (lab8funcs ./lab8/table.c)
 endif()
 
