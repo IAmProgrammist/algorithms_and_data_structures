@@ -32,6 +32,7 @@ extern "C"
     #include <lab6/stack.h>
     #include <lab6/queue.h>
     #include <lab7/tree.h>
+    #include <lab8/table.h>
 
 #ifdef __cplusplus
 }

@@ -19,7 +19,17 @@ SET (lab5funcs ./lab5/task2.c)
 SET (lab6funcs ./lab6/stack.c ./lab6/queue.c)
 SET (lab7funcs ./lab7/tree.c)
 
-add_library(alg ${lab1funcs} ${lab2funcs} ${lab3funcs} ${lab4funcs} ${lab5funcs} ${lab6funcs} ${lab7funcs})
+if(TARGET lab8_task2 OR TARGET lab8_task3)
+    SET (lab8funcs ./lab8/table.c)
+endif()
+
+
+if(TARGET lab8_task2)
+    add_library(alg ${lab1funcs} ${lab2funcs} ${lab3funcs} ${lab4funcs} ${lab5funcs} ${lab6funcs} ${lab7funcs} ${lab8funcs})
+else()
+    add_library(alg ${lab1funcs} ${lab2funcs} ${lab3funcs} ${lab4funcs} ${lab5funcs} ${lab6funcs} ${lab7funcs})
+endif()
+
 target_include_directories(alg PUBLIC ../../include/alg)
 
 target_link_libraries(alg m)
