@@ -1,4 +1,6 @@
-#include "../../../include/alg/lab8/table.h"
+#include <lab8/table.h>
+
+#include "../lab5/task2.c"
 
 #include <stddef.h>
 
@@ -27,8 +29,8 @@ bool PutTable(Table *T, BaseType E) {
     BeginPtr(T);
     while (!EndList(T) && T->ptr->next->data.Key < E.Key)
         MovePtr(T);
-    
-    if (T->ptr->next->data.Key == E.Key) {
+
+    if (!EndList(T) && T->ptr->next->data.Key == E.Key) {
         return false;
     }
 
@@ -47,6 +49,8 @@ bool GetTable(Table *T, BaseType *E, T_Key Key) {
     BeginPtr(T);
     while (!EndList(T) && T->ptr->next->data.Key < Key)
         MovePtr(T);
+    
+    if (EndList(T)) return false;
 
     if (T->ptr->next->data.Key == Key) {
         GetList(T, E);
@@ -62,6 +66,8 @@ bool ReadTable(Table *T, BaseType *E, T_Key Key) {
     BeginPtr(T);
     while (!EndList(T) && T->ptr->next->data.Key < Key)
         MovePtr(T);
+    
+    if (EndList(T)) return false;
 
     if (T->ptr->next->data.Key == Key) {
         ReadList(T, E);
@@ -77,6 +83,8 @@ bool WriteTable(Table *T, BaseType E) {
     BeginPtr(T);
     while (!EndList(T) && T->ptr->next->data.Key < E.Key)
         MovePtr(T);
+    
+    if (EndList(T)) return false;
 
     if (T->ptr->next->data.Key == E.Key) {
         MovePtr(T);

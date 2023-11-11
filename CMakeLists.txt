@@ -43,7 +43,7 @@ target_link_libraries(lab7_task2 alg)
 add_executable(lab7_task3 ./lab7/task3/main.c)
 target_link_libraries(lab7_task3 alg)
 
-add_executable(lab8_task2 ./lab8/task2/main.c ./libs/alg/lab8/table.c ./libs/alg/lab5/task2.c )
+add_executable(lab8_task2 ./lab8/task2/main.c )
 target_include_directories(lab8_task2 PUBLIC ./include/alg)
 
 # Zero library
