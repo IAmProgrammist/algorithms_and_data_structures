@@ -38,7 +38,7 @@ int main() {
 
         if (input == ' ' || input == '\0') {
             if (isStringFloat(buffer)) {
-                int val = atof(buffer);
+                float val = atof(buffer);
                 PutStack(&tokens, (BaseType) {0, val});
             } else if (!strcmp(buffer, "+") || !strcmp(buffer, "-") || !strcmp(buffer, "*") || !strcmp(buffer, "/")) {
                 BaseType leftOperand, rightOperand;
@@ -109,7 +109,7 @@ int main() {
             if (input == '\0') break;
         } else {
             if (bufferCurrentIndex >= TOKEN_BUFFER_SIZE - 1) {
-                fprintf(stderr, "Unable to parse. You can use only 7 symbols long varialbes.");
+                fprintf(stderr, "Unable to parse, %s is too long, you can use only 7 symbols long varialbes.", buffer);
                 return 1;
             }
 
